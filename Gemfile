@@ -1,7 +1,12 @@
 source "https://rubygems.org"
 
-# Specify your gem's dependencies in housing_scraper.gemspec
-gemspec
 
-gem "rake", "~> 12.0"
-gem "rspec", "~> 3.0"
+gem "rake"
+gem 'pry-byebug'
+gem 'pry'
+gem "nokogiri"
+gem "httparty"
+# gem 'dotenv-rails'
+# gem 'kimurai'
+# gem 'selenium-webdriver', '~> 3.142', '>= 3.142.7'
+# gem 'selenium', '~> 0.2.11'
