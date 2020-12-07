@@ -6,6 +6,7 @@ gem 'pry-byebug'
 gem 'pry'
 gem "nokogiri"
 gem "httparty"
+gem 'faraday'
 # gem 'dotenv-rails'
 # gem 'kimurai'
 # gem 'selenium-webdriver', '~> 3.142', '>= 3.142.7'
