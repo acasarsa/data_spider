@@ -42,43 +42,34 @@ class FantasyPros < Kimurai::Base
 
   def parse_page
     response = browser.current_response
-
+    
     # get all player cells // contains name, team, injury status
     playerCells = response.css('div.player-cell__td')
 
     
-
-    playerCells.each do |cell|
-      puts cell.inner_text
+    # go through each cell and set rankings[index+1] = inner_text 
+    playerCells.each_with_index do |cell, i|
+      rank = i + 1
+      player = { rank => cell.inner_text.strip }
+      @@rankings << player
+    end    
+    
+    
+    File.open("tmp/rankings.json","w") do |f|
+      f.write(JSON.pretty_generate(@@rankings))
     end
-      # @@rankings[:player_name] = 
-    
-
-    
-
-
-    
-
-
-
-    
-    # request_to :login, url: 'https://www.zillow.com/user/acct/login/'
-    # browser.find(:css, '[title="recaptcha challenge"]', wait: 25).click rescue break
-    # response = browser.current_response
-    # console.log('rankings', @@rankings)
-
-    # byebug
-
-    
-    
-    # File.open("tmp/rankings.json","w") do |f|
-    #   f.write(JSON.pretty_generate(@@rankings))
-    # end
 
     # save_to 'tmp/rankings.json', @@rankings, format: :pretty_json
   end
 
 
+  # [ 
+    # {1: 'player info' }
+      # 
+    # }
+    # 
+    # 
+  # ]
   
 end
 
