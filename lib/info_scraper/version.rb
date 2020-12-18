@@ -1,3 +1,3 @@
-module HousingScraper
+module InfoScraper
   VERSION = "0.1.0"
 end
