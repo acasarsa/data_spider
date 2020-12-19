@@ -15,7 +15,8 @@ class FantasyPros < Kimurai::Base
   @name = 'fantasyPros'
   @engine = :selenium_chrome
   # @start_urls = ["https://www.fantasypros.com/nfl/rankings/half-point-ppr-rb.php"] # for rb's
-  @start_urls = ["https://www.fantasypros.com/nfl/rankings/half-point-ppr-flex.php"] # for flex
+  # @start_urls = ["https://www.fantasypros.com/nfl/rankings/half-point-ppr-flex.php"] # for flex
+  @start_urls = ["https://www.fantasypros.com/nfl/rankings/dynasty-overall.php"] # for dynasty overall ppr
 
   @@rankings = []
 
@@ -25,37 +26,35 @@ class FantasyPros < Kimurai::Base
     @@rankings
   end
 
-
   def parse_page
     response = browser.current_response
     
+    # get ranking table
+    ranking_table = response.css('#ranking-table > tbody > tr')
     # get all player cells // contains name, team, injury status
-    player_cells = response.css('div.player-cell__td')
-
-    # go through each cell and set rankings[index+1] = inner_text 
-    # create json where rank is the key and player info is the value
-    # player_cells.each_with_index do |cell, i|
-    #   rank = i + 1
-    #   player = { rank => cell.inner_text.strip }
-    #   @@rankings << player
-    # end    
+    # player_cells = response.css('div.player-cell__td')
 
     # create json array of objects {player_name: 'name', team: 'team', status: 'q/d/ir etc'}
-    player_cells.each do |cell|
+    ranking_table.each do |player|
       # binding.pry
-      # grab player info & remove trailing whitespace + '()' while accounting for 3 word names and a status
-      # if there weren't '( )' to split on would need to add in more steps // like spliting at capital letters or substrings
-      player_info_arr = cell.inner_text.strip.split(/[()]/).each { |el| el.strip! } 
+      # grab player info & remove trailing whitespace + '()' while accounting for 3 word names and a status // if there weren't '( )' to split on would need to add in more steps // like spliting at capital letters or substrings
+      name_team_status = player.children[2].inner_text.strip.split(/[()]/).each { |el| el.strip! } 
+      info = name_team_status
 
-      player_name = player_info_arr.slice(0)
-      team = player_info_arr.slice(1)
-      if !player_info_arr[2] 
+      name = info.slice(0)
+      team = info.slice(1)
+      if !info[2] 
         status = ''
       else 
-        status = player_info_arr.slice(2)
+        status = info.slice(2)
       end
 
-      player = {name: player_name, team: team, status: status}
+      position = player.children[3].inner_text.tr('0-9','')
+      bye_week = player.children[4].inner_text
+      age = player.children[5].inner_text
+
+      player = {name: name, team: team, status: status, pos: position, bye_week: bye_week, age: age}
+
       
       @@rankings << player
     end  
@@ -64,17 +63,8 @@ class FantasyPros < Kimurai::Base
       f.write(JSON.pretty_generate(@@rankings))
     end
 
-    # save_to 'tmp/rankings.json', @@rankings, format: :pretty_json
+    # save_to 'tmp/rankings.json', @@rankings, format: :pretty_json # throws an error 
   end
-
-
-  # [ 
-    # {1: 'player info' }
-      # 
-    # }
-    # 
-    # 
-  # ]
   
 end
 
