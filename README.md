@@ -1,4 +1,4 @@
-# InfoScraper
+# DataSpider
 
 This is a scraping project I'm working on, there will be a few files in here. Currently working on making use of fantasy football data. 
 
@@ -10,12 +10,12 @@ Execute
 
 ## Usage
 
-Currently the zillow scraper does not work due to their anti-scrapping measures
+Currently the zillow scraper does not work due to their anti-scraping measures
 For fantasypros you can clone this repo down, bundle install, run it and pull out the rankings into a json file. 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/acasarsa/info_scraper. This project is intended to be a safe, welcoming space for collaboration. 
+Bug reports and pull requests are welcome on GitHub at https://github.com/acasarsa/data_spider. This project is intended to be a safe, welcoming space for collaboration. 
 
 ## License
 
