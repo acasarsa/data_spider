@@ -10,7 +10,7 @@ Execute
 
 ## Usage
 
-Currently the zillow scraper does not work due to their anti-scraping measures.
+Currently the zillow scraper does not accomplish what I had hopped due to their anti-scraping measures.
 For fantasypros you can clone this repo down, bundle install, run it and pull out the rankings into a json file. 
 
 ## Contributing
